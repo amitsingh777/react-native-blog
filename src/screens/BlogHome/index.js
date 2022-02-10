@@ -1,6 +1,6 @@
 import React, {useContext, useEffect} from 'react';
 import {Text} from 'react-native';
-
+import Icon from 'react-native-vector-icons/FontAwesome';
 import BlogContext from '../../AppContext';
 
 const BlogHome = () => {
@@ -20,7 +20,8 @@ const BlogHome = () => {
     };
     blogContext.dispatchData(action);
   }, []);
-  return <Text>Blog Home</Text>;
+  const myIcon = <Icon name="plus" size={30} color="#900" />;
+  return <Text>Blog Home {myIcon}</Text>;
 };
 
 export default BlogHome;
