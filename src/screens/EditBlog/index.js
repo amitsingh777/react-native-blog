@@ -8,11 +8,13 @@ const EditBlog = () => {
   const navigation = useNavigation();
   const [content, setContent] = useState('');
   const BlogPost = useContext(BlogContext);
+
   const selectedBlogID = navigation
     .getState()
     .routes.find(route => route.name === 'Edit Blog').params.id;
   useEffect(() => {
     const selectedBlog = BlogPost.data.find(blog => blog.id === selectedBlogID);
+
     setTitle(selectedBlog.title);
     setContent(selectedBlog.content);
   }, [selectedBlogID, BlogPost.data]);
@@ -22,13 +24,13 @@ const EditBlog = () => {
       type: 'EDIT_BLOG',
       payload: {
         data: {
-          id: (BlogPost.data.length - 1 || 0) + 1,
+          id: selectedBlogID,
           title: title,
           content: content,
         },
       },
     });
-    navigation.navigate('Show Blog');
+    navigation.navigate('Show Blog', {id: selectedBlogID});
   };
   return (
     <GenericForm

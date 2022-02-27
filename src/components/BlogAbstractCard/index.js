@@ -6,7 +6,7 @@ const BlogAbstractCard = ({title, id, onDeletePress, onCardPress}) => {
   const deleteIcon = (
     <MaterialCommunityIcons
       name="delete"
-      color="blue"
+      color="#5463FF"
       size={30}
       onPress={() => onDeletePress(id)}
     />

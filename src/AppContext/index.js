@@ -1,3 +1,3 @@
 import React from 'react';
 
-export const BlogContext = React.createContext({});
+export const BlogContext = React.createContext([]);

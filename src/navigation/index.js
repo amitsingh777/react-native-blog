@@ -15,8 +15,11 @@ const Navigator = () => {
   const onBlogHomeButtonPress = navigator => {
     navigator.navigate('Create Blog');
   };
-  const onEditBlogButtonPress = navigator => {
-    navigator.navigate('Edit Blog');
+  const onEditBlogButtonPress = navigation => {
+    const selectedBlogID = navigation
+      .getState()
+      .routes.find(route => route.name === 'Show Blog').params.id;
+    navigation.navigate('Edit Blog', {id: selectedBlogID});
   };
   return (
     <NavigationContainer>
@@ -36,11 +39,15 @@ const Navigator = () => {
         <Stack.Screen
           name="Show Blog"
           component={ShowBlog}
-          options={{
-            headerTitle: 'Show Blog',
-            headerRight: () => (
-              <HeaderRightButtonEdit onButtonPress={onEditBlogButtonPress} />
-            ),
+          options={({navigation}) => {
+            return {
+              headerTitle: 'Show Blog',
+              headerRight: () => (
+                <HeaderRightButtonEdit
+                  onButtonPress={() => onEditBlogButtonPress(navigation)}
+                />
+              ),
+            };
           }}
         />
       </Stack.Navigator>

@@ -8,10 +8,10 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 export const HeaderRightButton = ({onButtonPress}) => {
   const navigator = useNavigation();
   return (
-    <MaterialCommunityIcons.Button
+    <MaterialCommunityIcons
       name="plus"
-      color="blue"
-      size={20}
+      color="#5463FF"
+      size={30}
       onPress={() => onButtonPress(navigator)}
     />
   );
@@ -21,8 +21,8 @@ export const HeaderRightButtonEdit = ({onButtonPress}) => {
   return (
     <MaterialCommunityIcons
       name="playlist-edit"
-      fontSize="20"
-      color="blue"
+      size={30}
+      color="#5463FF"
       onPress={() => onButtonPress(navigator)}
     />
   );
