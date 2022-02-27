@@ -1,6 +1,6 @@
 import React, {useReducer} from 'react';
 import Navigator from './src/navigation';
-import BlogContext from './src/AppContext';
+import {BlogContext} from './src/AppContext';
 
 /**
  * blog={id,title,content}

@@ -1,27 +1,39 @@
 import React, {useContext, useEffect} from 'react';
-import {Text} from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
-import BlogContext from '../../AppContext';
+import {View, FlatList} from 'react-native';
+import {useNavigation} from '@react-navigation/native';
+import BlogAbstractCard from '../../components/BlogAbstractCard';
+import {BlogContext} from '../../AppContext';
 
 const BlogHome = () => {
   const blogContext = useContext(BlogContext);
-  console.log('rendered');
-  useEffect(() => {
-    const action = {
-      type: 'CREATE_BLOG',
-      payload: {
-        data: {
-          id: 0,
-          title: 'My Success',
-          content:
-            'These are my marching steps towards my success, which is surreal!',
-        },
-      },
-    };
-    blogContext.dispatchData(action);
-  }, []);
-  const myIcon = <Icon name="plus" size={30} color="#900" />;
-  return <Text>Blog Home {myIcon}</Text>;
+  const navigation = useNavigation();
+  const onDeletePress = id => {
+    blogContext.dispatchData({type: 'DELETE_BLOG', payload: {id: id}});
+  };
+
+  const onCardPress = blog => {
+    navigation.navigate('Show Blog', {id: blog.id});
+  };
+
+  const renderList = blog => {
+    return (
+      <BlogAbstractCard
+        {...blog}
+        onDeletePress={onDeletePress}
+        onCardPress={() => onCardPress(blog)}
+      />
+    );
+  };
+
+  return (
+    <View>
+      <FlatList
+        data={blogContext.data}
+        keyExtractor={blog => blog.id}
+        renderItem={({item}) => renderList(item)}
+      />
+    </View>
+  );
 };
 
 export default BlogHome;
