@@ -20,15 +20,10 @@ const EditBlog = () => {
   }, [selectedBlogID, BlogPost.data]);
 
   const onButtonPress = () => {
-    BlogPost.dispatchData({
-      type: 'EDIT_BLOG',
-      payload: {
-        data: {
-          id: selectedBlogID,
-          title: title,
-          content: content,
-        },
-      },
+    BlogPost.editBlog({
+      id: selectedBlogID,
+      title: title,
+      content: content,
     });
     navigation.navigate('Show Blog', {id: selectedBlogID});
   };

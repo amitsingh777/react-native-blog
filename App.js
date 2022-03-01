@@ -1,6 +1,13 @@
 import React, {useReducer} from 'react';
 import Navigator from './src/navigation';
 import {BlogContext} from './src/AppContext';
+import {blogReducer} from './src/AppContext/reducer';
+import {
+  createBlog,
+  getBlogs,
+  editBlog,
+  deleteBlog,
+} from './src/AppContext/action';
 
 /**
  * blog={id,title,content}
@@ -21,31 +28,26 @@ const initialState = [
 ];
 
 const App = () => {
-  const [data, dispatchData] = useReducer(blogReducer, initialState);
+  const [data, dispatch] = useReducer(blogReducer, initialState);
 
-  function blogReducer(blogs, action) {
-    switch (action.type) {
-      case 'CREATE_BLOG':
-        return [...blogs, action.payload.data];
-      case 'DELETE_BLOG':
-        return blogs.filter(blog => blog.id !== action.payload.id);
-      case 'EDIT_BLOG':
-        const toBeEditedBlogIndex = blogs.findIndex(
-          blogItem => blogItem.id === action.payload.data.id,
-        );
-        if (toBeEditedBlogIndex !== -1) {
-          let newBlogArr = [...blogs];
-          newBlogArr[toBeEditedBlogIndex] = action.payload.data;
-          return newBlogArr;
-        }
-        return blogs;
-      default:
-        return blogs;
+  const boundDispatch = actions => {
+    let boundedActionCreators = {};
+    for (let actionCreator in actions) {
+      boundedActionCreators[actionCreator] = actions[actionCreator](dispatch);
     }
-  }
-  console.log(data);
+    return boundedActionCreators;
+  };
+
+  const boundedActionCreators = boundDispatch({
+    createBlog,
+    getBlogs,
+    editBlog,
+    deleteBlog,
+  });
+
   return (
-    <BlogContext.Provider value={{data, dispatchData}}>
+    <BlogContext.Provider
+      value={{data, dispatchData: dispatch, ...boundedActionCreators}}>
       <Navigator />
     </BlogContext.Provider>
   );

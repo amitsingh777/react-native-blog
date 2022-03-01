@@ -10,16 +10,7 @@ const CreateBlog = () => {
   const [content, setContent] = useState('');
 
   const onButtonPress = () => {
-    blogContext.dispatchData({
-      type: 'CREATE_BLOG',
-      payload: {
-        data: {
-          id: (blogContext.data[blogContext.data.length - 1]?.id || 0) + 1,
-          title: title,
-          content: content,
-        },
-      },
-    });
+    blogContext.createBlog({title: title, content: content});
     navigator.navigate('Blog');
   };
 

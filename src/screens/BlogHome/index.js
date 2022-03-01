@@ -7,8 +7,11 @@ import {BlogContext} from '../../AppContext';
 const BlogHome = () => {
   const blogContext = useContext(BlogContext);
   const navigation = useNavigation();
+  useEffect(() => {
+    blogContext.getBlogs();
+  }, []);
   const onDeletePress = id => {
-    blogContext.dispatchData({type: 'DELETE_BLOG', payload: {id: id}});
+    blogContext.deleteBlog(id);
   };
 
   const onCardPress = blog => {
